@@ -1,52 +1,16 @@
-////////////////////////
-// Global Variables   //
-////////////////////////
-
-const bookOne = {
-   title: "Corduroy",
-   author: "Don Freeman",
-   publisher: "Viking Books",
-   year: "1968",
-   jacketColor: "firebrick"
+#bookDisplay {
+  padding: 20px;
+  border: 1px solid black;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
 }
 
-const bookTwo = {
-   title: "The Cat in the Hat",
-   author: "Dr. Seuss",
-   publisher: "Random House",
-   year: "1957",
-   jacketColor: "purple"
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-const bookThree = {
-   title: "The Giving Tree",
-   author: "Shel Silverstein",
-   publisher: "Harper & Row",
-   year: "1964",
-   jacketColor: "green"
+li {
+  margin: 5px;
 }
-
-const bookFour = {
-   title: "Where the Wild Things Are",
-   author: "Maurice Sendak",
-   publisher: "Harper & Row",
-   year: "1963",
-   jacketColor: "yellow"
-}
-
-////////////////////////
-// Functions          //
-////////////////////////
-
-function displayBook(bookIndex) {
-  let book;
-  switch (bookIndex) {
-    case 1:
-      book = bookOne;
-      break;
-    case 2:
-      book = bookTwo;
-      break;
-    case 3:
-      book = bookThree;
-     
