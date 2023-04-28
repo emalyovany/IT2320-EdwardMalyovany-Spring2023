@@ -1,60 +1,63 @@
-const salesByCampus = [
-  { name: "East (Matt)", sales: [45, 50, 47] },
-  { name: "West (Mike)", sales: [95, 73, 40] },
-  { name: "Westshore (Mark)", sales: [10, 32, 24] },
-  { name: "Metro (Milt)", sales: [86, 74, 80] },
+let items = [
+  { index: 0, name: "Classic Lemonade", quantity: 0, price: 5.0 },
+  { index: 1, name: "Strawberry Lemonade", quantity: 0, price: 6.0 },
+  { index: 2, name: "Special Limeade", quantity: 0, price: 8.0 },
 ];
 
-function calculateTotalSales(sales) {
-  let total = 0;
-  for (let i = 0; i < sales.length; i++) {
-    total += sales[i];
+function addToOrder(itemIndex) {
+  const item = items.find((i) => i.index === itemIndex);
+
+  if (!item) {
+    console.error("Invalid item index");
+    return;
   }
-  return total;
+
+  item.quantity++;
+
+  updateTransactionItems();
 }
 
-function salesByPerson() {
-  let result = "";
-  for (let i = 0; i < salesByCampus.length; i++) {
-    const campus = salesByCampus[i];
-    const totalSales = calculateTotalSales(campus.sales);
-    result += `${campus.name}: $${totalSales}\n`;
+function removeFromOrder(itemIndex) {
+  const item = items.find((i) => i.index === itemIndex);
+
+  if (item) {
+    if (item.quantity > 0) {
+      item.quantity--;
+    }
   }
-  alert(result);
+
+  updateTransactionItems();
 }
 
-function bestAndWorst() {
-  let bestSalesperson = null;
-  let worstSalesperson = null;
-  for (let i = 0; i < salesByCampus.length; i++) {
-    const campus = salesByCampus[i];
-    const totalSales = calculateTotalSales(campus.sales);
-    if (!bestSalesperson || totalSales > bestSalesperson.sales) {
-      bestSalesperson = { name: campus.name, sales: totalSales };
-    }
-    if (!worstSalesperson || totalSales < worstSalesperson.sales) {
-      worstSalesperson = { name: campus.name, sales: totalSales };
-    }
-  }
-  alert(
-    `Best salesperson: ${bestSalesperson.name}\nWorst salesperson: ${worstSalesperson.name}`
-  );
+function clearAllItems() {
+  items.forEach((item) => {
+    item.quantity = 0;
+  });
+
+  updateTransactionItems();
 }
 
-function commissionsByMonth() {
-  let result = "";
-  for (let i = 0; i < salesByCampus.length; i++) {
-    const campus = salesByCampus[i];
-    const sales = campus.sales;
-    let totalCommissions = 0;
-    for (let j = 0; j < sales.length; j++) {
-      const commission = sales[j] * 0.13;
-      totalCommissions += commission;
-    }
-    result += `${campus.name}:\n`;
-    result += `January: $${totalCommissions.toFixed(2)}\n`;
-    result += `February: $${totalCommissions.toFixed(2)}\n`;
-    result += `March: $${totalCommissions.toFixed(2)}\n\n`;
-  }
-  alert(result);
+function updateTransactionItems() {
+  const itemsList = document.getElementById("itemsList");
+  itemsList.innerHTML = "";
+  let totalPrice = 0;
+
+  items.forEach((item) => {
+    const li = document.createElement("li");
+    const quantity = `X${item.quantity}`;
+    const itemName = item.name;
+    const itemPrice = `$${(item.quantity * item.price).toFixed(2)}`;
+    li.appendChild(
+      document.createTextNode(`${quantity} ${itemName}: ${itemPrice}`)
+    );
+    itemsList.appendChild(li);
+    totalPrice += item.quantity * item.price;
+  });
+
+  const total = document.createElement("li");
+  const totalText = document.createTextNode(`Total: $${totalPrice.toFixed(2)}`);
+  const totalBold = document.createElement("b");
+  totalBold.appendChild(totalText);
+  total.appendChild(totalBold);
+  itemsList.appendChild(total);
 }
